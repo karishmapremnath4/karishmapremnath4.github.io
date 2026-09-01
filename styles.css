@@ -1,0 +1,1526 @@
+/* Karishma Premnath — portfolio
+   Single stylesheet. No frameworks, no webfonts, no build step. */
+
+:root {
+  --paper:  #fbfaf8;
+  --panel:  #f3f1ec;
+  --ink:    #1c1c1a;
+  --muted:  #63625c;
+  --faint:  #8a8880;
+  --rule:   #e0ded7;
+  --accent: #14425c;
+
+  --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino,
+           "Book Antiqua", Georgia, serif;
+  --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --measure: 46rem;
+
+  /* date column + its gutter — how far a block pulls left to run
+     the full measure instead of sitting in the narrow body column */
+  --breakout: calc(-9.5rem - 2.25rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+p { margin: 0 0 0.9rem; }
+
+/* ── top bar ─────────────────────────────────────────────── */
+
+.topbar {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar-inner {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0.85rem 1.75rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.topbar-name {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.topbar-nav a {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.topbar-nav a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ── layout ──────────────────────────────────────────────── */
+
+main {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 4.5rem 1.75rem 1rem;
+}
+
+section {
+  margin-bottom: 3.75rem;
+  scroll-margin-top: 4.5rem;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--faint);
+  border-top: 1px solid var(--rule);
+  padding-top: 0.85rem;
+  margin-bottom: 1.85rem;
+}
+
+.label-note {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-style: italic;
+  color: var(--faint);
+}
+
+/* ── intro ───────────────────────────────────────────────── */
+
+.intro { margin-bottom: 4.25rem; }
+
+h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.role {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  margin-bottom: 2rem;
+}
+
+.lede {
+  font-size: 1.09rem;
+  line-height: 1.7;
+  max-width: 38rem;
+}
+
+.loc-line {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--faint);
+  margin: 1.9rem 0 0;
+}
+
+/* ── contact section ─────────────────────────────────────── */
+
+.contact-list {
+  margin: 1.9rem 0 0;
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 0 2.25rem;
+}
+
+.contact-list dt {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--faint);
+  padding-top: 0.1rem;
+}
+
+.contact-list dd {
+  margin: 0 0 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+.contact-list dd:last-of-type { margin-bottom: 0; }
+
+/* ── publication ─────────────────────────────────────────── */
+
+.pub {
+  background: var(--act, var(--panel));
+  border-left: 3px solid var(--ac, var(--accent));
+  padding: 1.6rem 1.75rem 1.4rem;
+}
+
+.pub-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.42rem;
+  line-height: 1.28;
+  margin: 0 0 0.6rem;
+}
+
+.pub-venue {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 1.05rem;
+}
+
+.pub-link {
+  margin: 0.9rem 0 0;
+  font-size: 0.94rem;
+}
+
+/* ── entries (projects / experience / education) ──────────── */
+
+.entry {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 0 2.25rem;
+  padding-bottom: 2.1rem;
+  margin-bottom: 2.1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+section .entry:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.entry-date {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--faint);
+  margin: 0.42rem 0 0;
+  white-space: nowrap;
+}
+
+.entry h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 0 0 0.65rem;
+}
+
+.entry h3 .org {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.entry-body p:last-child { margin-bottom: 0; }
+
+.metrics {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: var(--ink);
+  border-left: 2px solid var(--rule);
+  padding-left: 0.85rem;
+  margin: 1rem 0 0.9rem;
+}
+
+.stack {
+  font-family: var(--mono);
+  font-size: 0.73rem;
+  line-height: 1.6;
+  color: var(--faint);
+  margin-top: 0.85rem;
+}
+
+.edu-note {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+/* ── skills ──────────────────────────────────────────────── */
+
+.skills {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 0 2.25rem;
+}
+
+.skills dt {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--faint);
+  padding-top: 0.18rem;
+}
+
+.skills dd {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+.skills dd:last-of-type { margin-bottom: 0; }
+
+/* ── footer ──────────────────────────────────────────────── */
+
+footer {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2.25rem 1.75rem 4rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+footer p { margin: 0 0 0.4rem; }
+footer .updated { color: var(--faint); }
+
+/* ── narrow screens ──────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .topbar-name { display: none; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+
+  main { padding: 3rem 1.25rem 1rem; }
+
+  /* the 7-item nav needs two rows this narrow, so don't let it
+     sit pinned over the content — let it scroll away instead */
+  .topbar { position: static; }
+  .topbar-inner { padding: 0.75rem 1.25rem; }
+  .topbar-name { display: none; }
+  .topbar-nav { gap: 0.7rem 1rem; }
+
+  section { scroll-margin-top: 1.25rem; }
+
+  .entry, .skills, .contact-list { grid-template-columns: 1fr; gap: 0; }
+
+  .entry-date {
+    margin: 0 0 0.5rem;
+    order: -1;
+  }
+
+  .entry h3 .org { display: block; white-space: normal; }
+
+  .skills dt { margin-bottom: 0.35rem; padding-top: 0; }
+  .skills dd { margin-bottom: 1.4rem; }
+
+  .contact-list dt { margin-bottom: 0.2rem; padding-top: 0; }
+  .contact-list dd { margin-bottom: 1.1rem; }
+
+  .pub { padding: 1.3rem 1.25rem 1.15rem; }
+  footer { padding: 2rem 1.25rem 3rem; }
+}
+
+/* ── print ───────────────────────────────────────────────── */
+
+@media print {
+  :root { --paper: #fff; --panel: #fff; }
+
+  body { font-size: 10.5pt; line-height: 1.45; }
+
+  .topbar { display: none; }
+
+  main { max-width: none; padding: 0; }
+
+  section { margin-bottom: 1.6rem; page-break-inside: auto; }
+
+  .intro { margin-bottom: 1.6rem; }
+  h1 { font-size: 22pt; }
+  .lede { font-size: 10.5pt; }
+
+  .entry, .pub, .skills, .contact-list { page-break-inside: avoid; }
+
+  .entry {
+    padding-bottom: 0.9rem;
+    margin-bottom: 0.9rem;
+    grid-template-columns: 7.5rem 1fr;
+  }
+
+  .pub { border-left: 2px solid #000; padding: 0 0 0 0.9rem; }
+
+  a { color: #000; text-decoration: none; }
+
+  /* spell out the links, since a printed page can't be clicked */
+  .pub-link a::after { content: " (" attr(href) ")"; font-size: 8.5pt; color: #444; }
+
+  /* the contact list already prints its own address text, so only
+     annotate the mailto/relative ones that would otherwise be opaque */
+  .contact-list a[href^="mailto"]::after { content: ""; }
+
+  footer { padding: 0.9rem 0 0; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Domain layer — engineering-drawing cues: schematic, drawing sheet,
+   numbered index, and the two data figures.
+   Figure ramp: #8bacc0 → #14425c (one hue, 2 shades). Validated with
+   the ordinal checks against the #fbfaf8 surface: monotone L, ΔL gap,
+   light end at 2.30:1. No dark-mode ramp — this page is light only.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── numbered section index ───────────────────────────────────────── */
+
+/* the number reads as a drawing-sheet zone marker rather than a prefix */
+.sec-no {
+  display: inline-block;
+  background: var(--ac, var(--accent));
+  color: var(--paper);
+  padding: 0.12rem 0.42rem 0.14rem;
+  border-radius: 2px;
+  margin-right: 0.7rem;
+  letter-spacing: 0.09em;
+}
+
+/* ── discipline tag on each entry ─────────────────────────────────── */
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ac, var(--muted));
+  margin: 0 0 0.55rem;
+}
+
+/* ── figures (Fig. 2 unit grid, Fig. 3 dumbbell) ──────────────────── */
+
+.fig { margin: 1.35rem 0 0; }
+
+.fig-cap {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--faint);
+  margin-bottom: 0.6rem;
+}
+.fig-no { color: var(--accent); }
+
+.fig-svg { display: block; height: auto; }
+
+.unitgrid { width: 100%; max-width: 260px; }
+.dumbbell { width: 100%; max-width: 340px; }
+
+/* one hue, two shades — the hue comes from the entry's ink */
+.u-ok,  .k-ok  { fill: var(--acl, #8bacc0); }
+.u-hit, .k-hit { fill: var(--ac,  #14425c); }
+
+/* legend — identity is never colour alone, each key is labelled */
+.fig-key {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.9;
+  color: var(--muted);
+  margin: 0.7rem 0 0;
+}
+.key {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 1.5px;
+  margin: 0 0.4rem 0 0;
+  vertical-align: baseline;
+}
+.k-ok  { background: var(--acl, #8bacc0); }
+.k-hit { background: var(--ac,  #14425c); }
+.fig-key .k-hit { margin-left: 1.1rem; }
+
+/* dumbbell marks: 2px surface ring on the dots, 2px connector */
+.db-track { stroke: var(--rule); stroke-width: 1; }
+.db-link  { stroke: var(--acl, #8bacc0); stroke-width: 2; }
+.db-from  { fill: var(--acl, #8bacc0); stroke: var(--paper); stroke-width: 2; }
+.db-to    { fill: var(--ac,  #14425c); stroke: var(--paper); stroke-width: 2; }
+
+.db-val {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  fill: var(--muted);
+}
+.db-val-hi { fill: var(--ink); }
+.db-ax {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  fill: var(--faint);
+}
+
+/* ── narrow screens ──────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .fig-key .k-hit { margin-left: 0; }
+  .fig-key .key:nth-of-type(2) { display: inline-block; }
+}
+
+/* ── print ───────────────────────────────────────────────────────── */
+
+@media print {
+  .fig { page-break-inside: avoid; }
+}
+
+/* ── availability status ──────────────────────────────────────────── */
+
+.avail {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: var(--muted);
+  background: var(--panel);
+  border-left: 2px solid var(--accent);
+  padding: 0.5rem 0.85rem;
+  margin: 0 0 2rem;
+}
+
+.avail strong {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.avail-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .avail {
+    display: block;
+    font-size: 0.72rem;
+    padding: 0.5rem 0.7rem;
+  }
+  .avail-dot { display: none; }
+}
+
+@media print {
+  .avail {
+    background: none;
+    border-left: 2px solid #000;
+    padding: 0.2rem 0 0.2rem 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .avail-dot { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Detail layer — section headers, profile datasheet, stat grids,
+   signal chains, two-column breakdowns, chips, scope notes.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── section header: eyebrow + headline + intro ───────────────────── */
+
+.sec-head { margin-bottom: 2.25rem; }
+
+.sec-head .section-label { margin-bottom: 1rem; }
+
+.sec-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 1.95rem);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  margin: 0 0 0.6rem;
+}
+
+.sec-intro {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 34rem;
+  margin: 0;
+}
+
+/* ── about: chips row + profile datasheet ─────────────────────────── */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.15rem 0 0;
+}
+
+/* hairline technical tags, not filled pills */
+.chip {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.16rem 0.42rem;
+  white-space: nowrap;
+}
+
+.profile {
+  margin: 1.3rem 0 0;
+  display: grid;
+  grid-template-columns: 4.1rem 1fr;
+  gap: 0 0.85rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.9rem 0;
+}
+
+.profile dt {
+  font-family: var(--mono);
+  font-size: 0.63rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  padding-top: 0.16rem;
+}
+
+.profile dd {
+  margin: 0 0 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.profile dd:last-of-type { margin-bottom: 0; }
+
+/* ── skills: blocks with a note and a chip set ────────────────────── */
+
+.skill-block {
+  padding-bottom: 1.6rem;
+  margin-bottom: 1.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.skill-block:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.skill-block h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.1rem;
+  margin: 0 0 0.3rem;
+}
+
+.skill-note {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ── featured flag + subtitle on an entry ─────────────────────────── */
+
+.flag {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--ac, var(--accent));
+  margin-bottom: 0.3rem;
+}
+
+.sub {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+
+/* ── stat grid — the numbers, stated flatly ───────────────────────── */
+
+/* grid lines come from cell borders, not a bled-through background — a
+   partial last row then leaves clean paper instead of a grey block */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  border: 1px solid var(--rule);
+  margin: 1.4rem 0;
+}
+
+.stat {
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin: -1px -1px 0 0;   /* collapse against the container edges */
+  padding: 0.7rem 0.8rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* sans/mono on the figure, never the serif display face */
+.stat-n {
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  line-height: 1.15;
+  color: var(--ac, var(--accent));
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-l {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  line-height: 1.4;
+  color: var(--faint);
+}
+
+/* ── signal chain ─────────────────────────────────────────────────── */
+
+.chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  background: var(--panel);
+  padding: 0.6rem 0.75rem;
+  margin: 1.25rem 0;
+}
+.ch-s { white-space: nowrap; }
+.ch-ar { color: var(--ac, var(--accent)); }
+
+/* ── two-column detail breakdown ──────────────────────────────────── */
+
+/* ruled cells rather than two floating columns — the halves are never
+   the same length, and a cell makes the shorter one read as a panel
+   with room left in it instead of a ragged gap */
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--ac, var(--rule));
+  margin: 1.5rem 0 0;
+}
+
+.cols > div {
+  border-right: 1px solid var(--rule);
+  margin-right: -1px;          /* collapse against the container edge */
+  padding: 1.05rem 1.2rem 1.2rem;
+}
+
+.cols h4 {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ac, var(--faint));
+  font-weight: 400;
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--ac, var(--rule));
+}
+
+.cols ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cols li {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 0.7rem;
+  padding-left: 0.85rem;
+  position: relative;
+}
+.cols li:last-child { margin-bottom: 0; }
+
+.cols li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 4px;
+  height: 1px;
+  background: var(--ac, var(--accent));
+}
+
+/* ── highlight metric line ────────────────────────────────────────── */
+
+.hl {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.6;
+  color: var(--ink);
+  border-left: 2px solid var(--ac, var(--accent));
+  padding-left: 0.8rem;
+  margin: 1rem 0 0;
+}
+
+/* ── scope note — the honest caveat ───────────────────────────────── */
+
+.note {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  padding: 0.7rem 0.85rem;
+  margin: 1.4rem 0 0;
+}
+
+.note-l {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* ── featured entries get a touch more air ────────────────────────── */
+
+.entry-feat { padding-bottom: 2.75rem; }
+
+/* ── publication badge ────────────────────────────────────────────── */
+
+.pub-badge {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--ac, var(--accent));
+  margin: 0 0 0.6rem;
+}
+
+.pub .stats { margin: 1.3rem 0; }
+.pub .stat { background: var(--panel); }
+
+/* ── narrow screens ──────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .sec-head { margin-bottom: 1.75rem; }
+
+  .profile { grid-template-columns: 1fr; gap: 0; }
+  .profile dt { margin-bottom: 0.15rem; padding-top: 0; }
+  .profile dd { margin-bottom: 0.9rem; }
+
+  /* two columns of bullets is unreadable at this width */
+  .cols { grid-template-columns: 1fr; gap: 0; }
+
+  .stats { grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); }
+  .stat { padding: 0.6rem 0.65rem; }
+  .stat-n { font-size: 1.05rem; }
+
+  .chain { font-size: 0.64rem; }
+}
+
+/* ── print ───────────────────────────────────────────────────────── */
+
+@media print {
+  .stats, .cols, .note, .chain, .skill-block, .profile { page-break-inside: avoid; }
+  .stats { background: none; }
+  .stat { background: none; }
+  .stat-n { color: #000; }
+  .chain { background: none; border: 1px solid #ccc; }
+  .chip { border-color: #bbb; }
+  .sec-intro { color: #333; }
+}
+
+
+/* ── about: prose beside the portrait, datasheet full width below ────────── */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 3rem;
+  align-items: start;
+  margin-top: 1.9rem;
+}
+
+.about-text .lede { max-width: none; }
+
+/* the tags close out the prose column, and share the paragraphs' cap so
+   the left edge of the block stays one clean shape */
+.about-text .chips { max-width: 40rem; }
+.about-text .lede:first-child { margin-top: 0; }
+
+/* photo and datasheet share one right-hand column and one width, so the
+   table reads as a caption block under the portrait rather than a
+   full-width band cutting across the page */
+.about-side {
+  justify-self: end;
+  width: 100%;
+  max-width: 21rem;
+}
+
+.portrait {
+  margin: 0;
+  max-width: 100%;
+  border: 1px solid var(--rule);
+  padding: 6px;
+  background: var(--paper);
+}
+
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* a touch of restraint so the photo sits with the paper palette
+     rather than shouting against it */
+  filter: saturate(0.92) contrast(1.02);
+}
+
+@media (max-width: 760px) {
+  /* stack, and keep the portrait from dominating a narrow page */
+  .about-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .about-side { justify-self: start; max-width: 17rem; }
+}
+
+@media (max-width: 640px) {
+  /* the datasheet wants the full width back once everything is stacked */
+  .about-side { max-width: none; }
+  .portrait { max-width: 15rem; }
+  /* the label-over-value stacking set earlier stands here — a 4.6rem
+     label column leaves too little room for the longer values on a phone */
+}
+
+@media print {
+  .about-grid { grid-template-columns: 1fr 1fr; }
+  .about-side { max-width: 2.3in; }
+  .portrait { border: none; padding: 0; }
+  .portrait img { filter: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Emphasis layer — portrait label, skills discipline colour-code,
+   full-width stat grids, and the two added figures (Fig. 3 relative
+   bars, Fig. 4 frequency bands).
+
+   Skills palette: four muted print inks, one per discipline, all
+   ≥4.5:1 on the #fbfaf8 paper. Colour is decorative here — every
+   block is already named in text, so nothing is carried by hue alone.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── portrait label ───────────────────────────────────────────────── */
+
+/* ── skills: one ink per discipline ───────────────────────────────── */
+
+/* Five inks, one per engineering discipline. --ac is the ink, --acl its
+   light shade for figure fills, --act the wash behind chips and panels.
+   Set once on a section or an entry; everything inside inherits it. */
+.dom-blue  { --ac: #14425c; --acl: #8bacc0; --act: #edf2f5; }  /* control      */
+.dom-ochre { --ac: #8a5424; --acl: #d3b294; --act: #f8f2e9; }  /* instruments  */
+.dom-moss  { --ac: #3a6152; --acl: #9dbcb0; --act: #edf4f0; }  /* tooling      */
+.dom-plum  { --ac: #5b3f70; --acl: #b1a0c0; --act: #f3eff7; }  /* ml           */
+.dom-rose  { --ac: #8a3b4a; --acl: #d1a4ac; --act: #f9eef0; }  /* hardware     */
+
+.skill-block {
+  border-left: 3px solid var(--ac, var(--rule));
+  background: var(--act, transparent);
+  padding: 1.05rem 1.25rem 1.15rem;
+  margin-bottom: 1.1rem;
+  border-bottom: none;
+}
+.skill-block:last-child { margin-bottom: 0; }
+
+.skill-block h3 { color: var(--ac, var(--ink)); }
+
+/* chips take the block's wash — colour is decorative, every block is
+   already named in text, so nothing is carried by hue alone */
+.entry .chip {
+  color: var(--ac, var(--muted));
+  background: var(--act, transparent);
+  border-color: transparent;
+}
+
+/* inside a tinted panel the wash would vanish, so these take the paper */
+.skill-block .chip {
+  color: var(--ac, var(--muted));
+  background: var(--paper);
+  border-color: transparent;
+}
+
+/* a tinted rule under each section heading, in that section's ink */
+.sec-head .section-label { border-top-color: var(--ac, var(--rule)); }
+
+/* expanded projects are banded in their own ink across the top — a left
+   rule would be crossed by the stat grids, which break out under the date */
+.entry-feat {
+  border-top: 3px solid var(--ac, var(--rule));
+  padding-top: 1.5rem;
+}
+
+/* ── stat grid: bigger figure, ruled tick, full width ─────────────── */
+
+.stat {
+  padding-top: 0.85rem;
+  position: relative;
+}
+
+/* a short accent tick riding the cell's top rule — drawing-sheet cue */
+.stat::before {
+  content: "";
+  position: absolute;
+  left: 0.8rem;
+  top: 0;
+  width: 1.5rem;
+  height: 2px;
+  background: var(--ac, var(--accent));
+}
+
+.stat-n {
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+}
+
+/* pull the data blocks out under the date column so they share one left
+   edge and run the full measure; the prose stays in the reading column */
+.entry-feat .cols,
+.entry-feat .chain { margin-left: var(--breakout); }
+
+.stats.wide { margin-left: var(--breakout); }
+
+/* ── Fig. 3 — relative error bars ─────────────────────────────────── */
+
+.relbar   { width: 100%; max-width: 380px; }
+.spectrum { width: 100%; max-width: 380px; }
+
+.rb-base { fill: var(--acl, #8bacc0); }
+.rb-val  { fill: var(--ac,  #14425c); }
+
+.rb-lab {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  fill: var(--muted);
+}
+
+.rb-n {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  fill: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Fig. 4 — frequency bands ─────────────────────────────────────── */
+
+.sp-a { fill: var(--acl, #8bacc0); }
+.sp-b { fill: var(--ac,  #14425c); }
+
+.sp-l {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  fill: var(--muted);
+}
+.sp-l-hi { fill: var(--ink); }
+
+.sp-ax { stroke: var(--rule); stroke-width: 1; }
+.sp-tk { stroke: var(--rule); stroke-width: 1; }
+
+.sp-t {
+  font-family: var(--mono);
+  font-size: 8px;
+  fill: var(--faint);
+}
+
+/* ── narrow screens ──────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  /* the date column collapses here, so there is nothing to pull out of */
+  .stats.wide,
+  .entry-feat .cols,
+  .entry-feat .chain { margin-left: 0; }
+
+  .cols > div {
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    margin: 0 0 -1px;
+  }
+
+  .stat-n { font-size: 1.2rem; }
+  .stat::before { left: 0.65rem; width: 1.2rem; }
+
+  .skill-block { padding-left: 0.85rem; }
+}
+
+/* ── print ───────────────────────────────────────────────────────── */
+
+@media print {
+  .stats.wide,
+  .entry-feat .cols,
+  .entry-feat .chain { margin-left: 0; }
+  .stat::before { background: #000; }
+  .cols { border-top-color: #000; }
+  .cols h4 { color: #000; border-bottom-color: #ccc; }
+
+  /* colour is decorative — print reads back as ink on paper */
+  .skill-block { border-left: 2px solid #000; }
+  .entry-feat { border-top: 2px solid #000; }
+  .skill-block h3 { color: #000; }
+  .skill-block .chip,
+  .entry .chip {
+    color: #333;
+    background: none;
+    border-color: #bbb;
+  }
+  .tag, .sec-no, .flag, .pub-badge, .role { color: #000; }
+  .sec-head .section-label { border-top-color: #ccc; }
+  .pub { background: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Scroll reveal — the stat grids and the two-column breakdowns arrive
+   as they come into view: the container rises and its rules draw, then
+   the cells fill in across, the way a table gets written.
+
+   Gated behind .js, which is set in the head before first paint, so a
+   page without scripting renders everything visible and static.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* headers, skill panels and entries fade only — the rise is reserved for
+   the data blocks nested inside them, so nothing moves twice */
+.js .sec-head,
+.js .entry,
+.js .pub {
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.js .sec-head.in,
+.js .entry.in,
+.js .pub.in { opacity: 1; }
+
+.js .skill-block {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .45s ease,
+              transform .45s cubic-bezier(.22, .61, .36, 1);
+}
+
+.js .skill-block.in {
+  opacity: 1;
+  transform: none;
+}
+
+.js .stats,
+.js .cols {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .5s cubic-bezier(.22, .61, .36, 1),
+              transform .5s cubic-bezier(.22, .61, .36, 1);
+}
+
+.js .stats.in,
+.js .cols.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* cells come in behind the container, left to right */
+.js .stats .stat,
+.js .cols > div {
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.js .stats.in .stat,
+.js .cols.in > div { opacity: 1; }
+
+.js .stats.in .stat:nth-child(1) { transition-delay: 0.16s; }
+.js .stats.in .stat:nth-child(2) { transition-delay: 0.22s; }
+.js .stats.in .stat:nth-child(3) { transition-delay: 0.28s; }
+.js .stats.in .stat:nth-child(4) { transition-delay: 0.34s; }
+.js .stats.in .stat:nth-child(5) { transition-delay: 0.40s; }
+.js .stats.in .stat:nth-child(6) { transition-delay: 0.46s; }
+.js .stats.in .stat:nth-child(7) { transition-delay: 0.52s; }
+
+.js .cols.in > div:nth-child(1) { transition-delay: 0.18s; }
+.js .cols.in > div:nth-child(2) { transition-delay: 0.30s; }
+
+/* motion is decoration — anyone who has asked for less gets none of it */
+@media (prefers-reduced-motion: reduce) {
+  .js .sec-head,
+  .js .entry,
+  .js .pub,
+  .js .skill-block,
+  .js .stats,
+  .js .cols,
+  .js .stats .stat,
+  .js .cols > div {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media print {
+  .js .sec-head,
+  .js .entry,
+  .js .pub,
+  .js .skill-block,
+  .js .stats,
+  .js .cols,
+  .js .stats .stat,
+  .js .cols > div {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* panels and badges read back as ink */
+  .skill-block { background: none; border-left: 2px solid #000; }
+  .skill-block .chip { background: none; }
+  .sec-no { background: none; color: #000; padding: 0; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Wide sheets — the measure grows on a large screen so the page uses
+   the width instead of floating in the middle of it.
+
+   Only the data widens. Running prose stays near 40rem: a 1100px line
+   of body text is unreadable no matter how much room there is, so the
+   paragraphs keep their own cap while the stat grids, breakdowns and
+   figures take the space.
+   ══════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1180px) {
+  :root { --measure: 62rem; }
+
+  /* the side column is fixed now, so the prose takes the slack */
+  .about-grid { grid-template-columns: minmax(0, 1fr) 22rem; }
+  .about-side { max-width: 22rem; }
+
+  /* ---- and then break the flush edges again -------------------------
+     A sheet this wide, with everything aligned to the same two edges,
+     reads as one straight slab. Three offsets keep it from doing that. */
+
+  /* 1. the zone markers hang out into the left margin, so the left edge
+        is the badges and the text alternately, not one hard rule */
+  .sec-no { margin-left: -3.4rem; }
+
+  /* 2. the portrait drops below the first line of prose rather than
+        starting flush with it */
+  .about-side { margin-top: 1.9rem; }
+
+  /* 3. the breakdown halves are deliberately unequal — a 50/50 split at
+        this width reads as a mirror, which is the straightest look of all */
+  .cols { grid-template-columns: 1.12fr 0.88fr; }
+
+  .entry-body > p:not([class]),
+  .pub > p:not([class]) { max-width: 40rem; }
+
+  /* the intro sits beside a tall side column, so it takes a tighter
+     measure than the body copy — ~62 characters, and the extra lines
+     bring the two columns closer to the same height */
+  .about-text .lede,
+  .about-text .chips { max-width: 34rem; }
+
+  /* figures were sized for a narrow column and look stranded in a wide
+     panel — give them room to match */
+  .unitgrid { max-width: 330px; }
+  .relbar,
+  .spectrum { max-width: 460px; }
+}
+
+@media (min-width: 1500px) {
+  :root { --measure: 74rem; }
+
+  .about-grid { grid-template-columns: minmax(0, 1fr) 24rem; }
+  .about-side { max-width: 24rem; }
+
+  .sec-no { margin-left: -4rem; }
+
+  /* two half-columns of a 74rem sheet are wide enough to need their own
+     cap, or the bullets run past a comfortable line */
+  .cols li { max-width: 34rem; }
+
+  .unitgrid { max-width: 380px; }
+  .relbar,
+  .spectrum { max-width: 520px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Typed role line — the strap under the name types through the focus
+   areas behind a block caret.
+
+   The phrases live in the markup, so with no script the line is simply
+   the first one, static. Driven by setTimeout rather than rAF so a
+   background tab does not leave it frozen mid-word.
+   ══════════════════════════════════════════════════════════════════ */
+
+.role-roll { display: inline-block; }
+
+/* No-script baseline: the first phrase only. Scoped to .role-phrase, or
+   it would also hide the two spans the script injects in their place. */
+.role-phrase:not(:first-child) { display: none; }
+
+.role-caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1.02em;
+  margin-left: 0.16em;
+  vertical-align: -0.16em;
+  background: var(--accent);
+  animation: role-caret 1.05s steps(1) infinite;
+}
+
+@keyframes role-caret { 50% { opacity: 0; } }
+
+/* announced to a screen reader in place of the typing, which would
+   otherwise be read out one character at a time */
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .role-caret { animation: none; }
+}
+
+@media print {
+  .role-caret { display: none; }
+}
+
+
+/* ── very wide screens ───────────────────────────────────────────────
+   A third step. The sheet and the side column both grow, so the photo
+   gets bigger and the datasheet values get room to sit on one line
+   instead of trailing off with dead space beside them. Prose keeps its
+   own cap throughout — only the data widens. */
+
+@media (min-width: 1900px) {
+  :root { --measure: 92rem; }
+
+  .about-grid { grid-template-columns: minmax(0, 1fr) 28rem; }
+  .about-side { max-width: 28rem; }
+
+  /* more room for the values, and a label column to match */
+  .profile { grid-template-columns: 5rem 1fr; gap: 0 1.1rem; }
+  .profile dt { font-size: 0.66rem; }
+  .profile dd { font-size: 0.74rem; }
+
+  .sec-no { margin-left: -4.6rem; }
+
+  .unitgrid { max-width: 430px; }
+  .relbar,
+  .spectrum { max-width: 600px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Contact — the closing block, given a hierarchy rather than a flat
+   list: a status row across the top, email promoted to the widest
+   cell because it is the action that matters, then the rest.
+
+   Column counts are explicit rather than auto-fit, so the spans stay
+   predictable and every row comes out full at every width.
+   ══════════════════════════════════════════════════════════════════ */
+
+.contact-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 1.9rem 0 0;
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--ac, var(--accent));
+  background: var(--act, transparent);
+}
+
+@media (min-width: 620px) {
+  .contact-list { grid-template-columns: repeat(2, 1fr); }
+  .contact-primary { grid-column: span 2; }
+}
+
+@media (min-width: 980px) {
+  .contact-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.contact-list > div {
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin: -1px -1px 0 0;
+  padding: 0.9rem 1.15rem 1rem;
+}
+
+.contact-list dt {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--faint);
+  padding: 0;
+  margin: 0 0 0.35rem;
+}
+
+.contact-list dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ── status row across the top ─────────────────────────────────── */
+
+.contact-lead { grid-column: 1 / -1; }
+
+.contact-lead dd {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  color: var(--ink);
+  font-size: 0.84rem;
+}
+
+.lead-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ac, var(--accent));
+  transform: translateY(-2px);
+}
+
+/* ── the links behave like links ───────────────────────────────── */
+
+.contact-list a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.7rem;
+  color: var(--ac, var(--accent));
+  text-decoration: none;
+}
+
+.contact-list a::after {
+  content: "\2192";           /* → */
+  flex: none;
+  opacity: 0.5;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-list a:hover::after {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+/* email is the one that matters, so it gets the size as well as the width */
+.contact-primary dd { font-size: 0.88rem; }
+
+@media (max-width: 619px) {
+  .contact-list > div { padding: 0.8rem 0.95rem 0.9rem; }
+}
+
+@media print {
+  .contact-list {
+    background: none;
+    border-top: 2px solid #000;
+    grid-template-columns: repeat(2, 1fr);
+    page-break-inside: avoid;
+  }
+  .contact-list a { color: #000; }
+  .contact-list a::after { content: ""; }
+  .lead-dot { background: #000; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Drafting motif — a scatter of discipline symbols tiled behind the
+   whole page: transmitter balloon, control valve, ladder rung, op-amp,
+   feedforward net, robot arm, DIP package, PID loop.
+
+   Fixed rather than scrolling, so it reads as the paper the page is
+   printed on instead of a pattern moving past. Very low opacity — body
+   text sits directly on top of it, so anything heavier costs contrast.
+   ══════════════════════════════════════════════════════════════════ */
+
+.bg-motif {
+  position: fixed;
+  inset: 0;
+  background-image: url("tech-motif.svg");
+  background-repeat: repeat;
+  background-position: center top;
+  /* 0.10 is the practical ceiling: the muted grey used in section intros
+     and skill notes still clears 4.5:1 where a stroke passes behind it.
+     Past ~0.15 that text drops below the line. */
+  opacity: 0.10;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Everything sits above the paper. The topbar is deliberately NOT listed
+   here: it is already position:sticky with z-index 10 in the base rules,
+   and re-declaring position:relative on it silently kills the sticking,
+   which strands you at the bottom of a section with no nav to click. */
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* the opaque blocks already cover it; this just keeps the panels reading
+   as panels rather than as tinted glass over a pattern */
+.skill-block,
+.contact-list,
+.pub,
+.chain {
+  position: relative;
+  z-index: 1;
+}
+
+@media print {
+  .bg-motif { display: none; }
+}
