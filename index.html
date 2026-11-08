@@ -138,8 +138,8 @@
 
       <div class="skill-block dom-moss">
         <h3>Programming &amp; tools</h3>
-        <p class="skill-note">KiCad and LTspice for the relay board, CODESYS and OpenPLC for the skid, MATLAB for the MPC work, Python for the Structured Text defect classifier, UiPath for the RPA capstone.</p>
-        <p class="chips"><span class="chip">KiCad</span><span class="chip">LTspice</span><span class="chip">Multisim</span><span class="chip">CODESYS</span><span class="chip">OpenPLC</span><span class="chip">MATLAB</span><span class="chip">Simulink</span><span class="chip">AutoCAD</span><span class="chip">LabVIEW</span><span class="chip">Arduino IDE</span><span class="chip">ESP32</span><span class="chip">Embedded C</span><span class="chip">Git</span><span class="chip">UiPath (RPA)</span><span class="chip">Python</span><span class="chip">C</span><span class="chip">Java</span><span class="chip">SQL</span></p>
+        <p class="skill-note">C++17 firmware for the quadrotor and the pick-and-place arm, both cross-compiled for Cortex-M4 and flown or driven against physics models, KiCad and LTspice for the relay board, CODESYS and OpenPLC for the skid, MATLAB for the MPC work, Python for the Structured Text defect classifier, UiPath for the RPA capstone.</p>
+        <p class="chips"><span class="chip">KiCad</span><span class="chip">LTspice</span><span class="chip">Multisim</span><span class="chip">CODESYS</span><span class="chip">OpenPLC</span><span class="chip">MATLAB</span><span class="chip">Simulink</span><span class="chip">AutoCAD</span><span class="chip">LabVIEW</span><span class="chip">Arduino IDE</span><span class="chip">ESP32</span><span class="chip">Embedded C</span><span class="chip">C++17</span><span class="chip">STM32 (Cortex-M4)</span><span class="chip">GCC ARM Toolchain</span><span class="chip">ROS 2 (Jazzy)</span><span class="chip">MuJoCo</span><span class="chip">SPI</span><span class="chip">I2C</span><span class="chip">CAN</span><span class="chip">UART</span><span class="chip">Git</span><span class="chip">UiPath (RPA)</span><span class="chip">Python</span><span class="chip">C</span><span class="chip">Java</span><span class="chip">SQL</span></p>
       </div>
 
       <div class="skill-block dom-plum">
@@ -253,8 +253,78 @@
     <header class="sec-head">
       <p class="section-label"><span class="sec-no">04</span>Projects</p>
       <h2 class="sec-title">Selected work</h2>
-      <p class="sec-intro">Full-lifecycle control system design, machine learning applied to PLC code, and embedded sensing hardware.</p>
+      <p class="sec-intro">Embedded C++ firmware for flight and manipulation, full-lifecycle control system design, machine learning applied to PLC code, and sensing hardware from schematic to fabrication package.</p>
     </header>
+
+    <article class="entry entry-feat dom-rose">
+      <p class="entry-date"><span class="flag">Featured</span>Nov 2026 &ndash; Present</p>
+      <div class="entry-body">
+        <p class="tag">C++17 &middot; MuJoCo &middot; STM32F407 &middot; ROS 2</p>
+        <h3>PX-1 Quadrotor Flight Controller &mdash; Embedded C++ Firmware &amp; Closed-Loop Simulation</h3>
+        <p class="sub">Rigid-body model &rarr; attitude estimator &rarr; cascaded control &rarr; mixer &rarr; A* planner &rarr; fault supervisor &rarr; ARM cross-compile</p>
+        <p>
+          A flight controller written as firmware rather than as a script, flown against a
+          3D rigid-body model in MuJoCo. No simulator code reaches the firmware, so the same
+          source cross-compiles for a Cortex-M4 unchanged. A quadrotor is underactuated &mdash;
+          it cannot move sideways without first tilting &mdash; so position has to command
+          attitude, attitude has to command body rate, and the mixer has to decide what to give
+          up when it runs out of thrust. That structure is what I wanted to build and measure.
+        </p>
+
+        <div class="stats wide">
+          <div class="stat"><span class="stat-n">0.61 mm</span><span class="stat-l">Hover altitude hold, 1&sigma;</span></div>
+          <div class="stat"><span class="stat-n">0.29 &micro;s</span><span class="stat-l">Median control tick, p99 0.67 &micro;s</span></div>
+          <div class="stat"><span class="stat-n">21 ms</span><span class="stat-l">Frozen-IMU detection to safe descent</span></div>
+          <div class="stat"><span class="stat-n">474</span><span class="stat-l">Unit checks, 0 failures</span></div>
+          <div class="stat"><span class="stat-n">17.9 KB</span><span class="stat-l">Flash image on STM32F407</span></div>
+          <div class="stat"><span class="stat-n">11</span><span class="stat-l">Firmware bugs found by closing the loop</span></div>
+        </div>
+
+        <p class="chain"><span class="ch-s">Gyro &middot; accel &middot; mag, 1&nbsp;kHz</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Mahony AHRS on SO(3)</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Position 50&nbsp;Hz</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Attitude 250&nbsp;Hz</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Rate 1&nbsp;kHz</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Mixer</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">4 ESCs</span></p>
+
+        <div class="cols">
+          <div>
+            <h4>Firmware &amp; estimation</h4>
+            <ul>
+              <li>All three loops run on integer subdivisions of one 1&nbsp;kHz tick, so there is a single time base and no drift between them. Compiled with <code>-Werror -fno-exceptions -fno-rtti</code>, no heap, no recursion, no STL containers and no virtual dispatch.</li>
+              <li>Mahony complementary filter on SO(3) with gyro-bias estimation. The accelerometer is gated out whenever horizontal body force exceeds 0.20&nbsp;g, which cut attitude error during aggressive translation from 50% to 0.5%.</li>
+              <li>Control allocation with an explicit desaturation policy: when a rotor command clips, the mixer sacrifices collective thrust and keeps the moments, because losing attitude authority is what ends a flight.</li>
+              <li>26-connected A* over a bit-packed occupancy grid with an admissible Euclidean heuristic, open-addressing hash and a bounded node pool &mdash; 2,235 nodes and 706&nbsp;&micro;s for a wall-with-a-gap traverse, with line-of-sight shortcutting on the result.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Measurement &amp; failure handling</h4>
+            <ul>
+              <li>Wrote a swept-sinusoid frequency-response tool and extracted gain and phase by correlation. It showed the position loop was running at a damping ratio of 0.30 against an intended 0.70, which four earlier rounds of debugging had been compensating for rather than finding.</li>
+              <li>Fixing that took hover hold from &plusmn;1.85&nbsp;mm to &plusmn;0.61&nbsp;mm and step overshoot from 108&nbsp;mm to 23&nbsp;mm.</li>
+              <li>Modelled four position sources &mdash; perfect, VIO, optical flow and GPS &mdash; at their real rates, noise and lag. GPS at 10&nbsp;Hz with 150&nbsp;ms lag was unflyable until the controller was made to schedule its own gains off the reported delay; all four now fly.</li>
+              <li>Injected faults rather than assuming them: a frozen SPI bus is caught in 21&nbsp;ms and lands the aircraft, a 250&nbsp;ms position dropout is correctly ignored, and re-arming with a latched fault is refused.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="note">
+          <span class="note-l">What the loop caught</span>
+          A 90&deg; mismatch between the simulated magnetic field and the frame the estimator
+          assumed sent the aircraft 67&nbsp;m off course. An altitude fault was declared in the
+          header but never raised, so a crash was reported as a healthy hover. A stuck-sensor
+          detector grounded a perfectly healthy aircraft once the gyro was quantised to 16 bits.
+          None of these are visible by reading the code; all of them are obvious the first time
+          the firmware is asked to fly something that pushes back.
+        </p>
+
+        <p class="note">
+          <span class="note-l">Scope note</span>
+          The firmware cross-compiles for an STM32F407 at 17,920&nbsp;bytes of flash and 95.5% of
+          SRAM, with <code>_sbrk</code> stubbed to fail so any allocation breaks the link, and runs
+          hardware-in-the-loop over a CRC-checked serial protocol. It has not been flown on
+          physical hardware, so every figure above is a simulation result and not a bench
+          measurement. A ROS 2 (Jazzy) graph wraps the same firmware through a C API for
+          visualisation and logging.
+        </p>
+
+      </div>
+    </article>
 
     <article class="entry entry-feat dom-ochre">
       <p class="entry-date"><span class="flag">Featured</span>Oct 2026</p>
@@ -468,6 +538,74 @@
         </figure>
 
         <p class="chips"><span class="chip">Python</span><span class="chip">Structured Text</span><span class="chip">Decision Trees</span><span class="chip">Static Analysis</span><span class="chip">Feature Engineering</span><span class="chip">Automated Repair</span></p>
+      </div>
+    </article>
+
+    <article class="entry entry-feat dom-blue">
+      <p class="entry-date"><span class="flag">Featured</span>Jan &ndash; Mar 2026</p>
+      <div class="entry-body">
+        <p class="tag">Embedded C++ &middot; I2C &middot; SPI &middot; CAN &middot; UART &middot; STM32F407</p>
+        <h3>PPA-100 Pick and Place Arm &mdash; Register-Level Firmware &amp; Sensorless Load Estimation</h3>
+        <p class="sub">Bus drivers &rarr; fixed-priority scheduler &rarr; cascaded joint control &rarr; 8-state filter &rarr; fault supervisor &rarr; pick-and-place sequence</p>
+        <p>
+          Firmware for a two-joint arm that picks boxes off a table and places them where it is
+          told, developed against a simulated cell. It has no scale and no force sensor, so it
+          works out what it is carrying and how hard it is pressing from motor current and a
+          model of itself. It finds the boxes with a laser sweep rather than being handed
+          coordinates, and feels for the box top rather than being told its height.
+        </p>
+
+        <div class="stats wide">
+          <div class="stat"><span class="stat-n">11 g</span><span class="stat-l">Payload mass error, settled</span></div>
+          <div class="stat"><span class="stat-n">0.1 N</span><span class="stat-l">Contact force error on 87 N</span></div>
+          <div class="stat"><span class="stat-n">0.12 mm</span><span class="stat-l">Mean tool position error</span></div>
+          <div class="stat"><span class="stat-n">23 ms</span><span class="stat-l">Frozen-encoder detection, channel isolated</span></div>
+          <div class="stat"><span class="stat-n">127</span><span class="stat-l">Checks across 8 suites</span></div>
+          <div class="stat"><span class="stat-n">29.1 KB</span><span class="stat-l">Flash on STM32F407, no heap</span></div>
+        </div>
+
+        <p class="chain"><span class="ch-s">IMU on I2C</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Encoders on SPI</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">1&nbsp;kHz scheduler, 5 tasks</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">8-state EKF</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Torque over CAN</span><span class="ch-ar" aria-hidden="true">&rarr;</span><span class="ch-s">Servo drives</span></p>
+
+        <div class="cols">
+          <div>
+            <h4>Drivers, scheduling &amp; control</h4>
+            <ul>
+              <li>Four buses driven at register level &mdash; inertial sensor on I2C, encoders on SPI, motor drives on CAN, laser ranger on UART &mdash; against device models that hold their own registers, so <code>Imu::init()</code> genuinely reads WHO_AM_I and a wrong configuration byte produces wrong numbers instead of being quietly ignored.</li>
+              <li>Fixed-priority scheduler running five tasks off a 1&nbsp;kHz tick, with a cascaded position, velocity and current structure per joint and anti-windup that recovers in 9&nbsp;ms against 766&nbsp;ms with it disabled.</li>
+              <li>The current loop is closed inside the drive, not on the controller, and the arithmetic forces it: a two-axis cycle needs four CAN frames, about 302&nbsp;&micro;s, while a 10&nbsp;kHz loop has a 100&nbsp;&micro;s budget. That is why real drives take a torque setpoint from the bus, and why this one does too.</li>
+              <li>Configuration-space map built in 0.3&nbsp;ms, 3,892 of 9,216 poses blocked; object centres located to 1&nbsp;mm and heights to 1.9&nbsp;mm by laser sweep.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Estimation &amp; diagnostics</h4>
+            <ul>
+              <li>An 8-state Extended Kalman Filter infers payload mass, external torque and joint friction from motor current alone, recovering a friction scale of 2.96 against a true 3.00.</li>
+              <li>The first version estimated a 19.9&nbsp;kg payload for a 0.25&nbsp;kg box, because external torque, payload and friction all present the same way: the motors are working harder than the model predicts. One filter cannot separate all three at once.</li>
+              <li>Fixed by letting the task layer declare the regime &mdash; free motion leaves external torque free to move in milliseconds so a collision is caught, while a confirmed grip pins it near zero so the payload has to explain the residual. That is what industrial arms do, and the filter cannot make the call because only the sequence knows what the arm is doing.</li>
+              <li>Faults are detected and acted on rather than logged: a frozen encoder in 23&nbsp;ms with the channel dropped and the arm continuing on the other, a silent ranger in 43&nbsp;ms, a collision in free motion in 160&nbsp;ms, and zero false alarms over 7,493 control cycles of hard step moves.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="note">
+          <span class="note-l">Build guarantees</span>
+          No dynamic allocation is a link-time property, not a claim: there is no heap section in
+          the linker script and <code>_sbrk</code> always fails, so anything reaching for
+          <code>malloc</code>, <code>new</code>, <code>std::vector</code> or
+          <code>std::string</code> fails to link, and the size report fails the build if an
+          allocator appears in the image. The linker also refuses to leave less than 8&nbsp;KB of
+          SRAM for the stack, and the reset handler fills a 1&nbsp;KB guard band below it with a
+          pattern the telemetry reports on, so a stack excursion is visible rather than silent.
+        </p>
+
+        <p class="note">
+          <span class="note-l">Scope note</span>
+          Everything above the four bus interfaces &mdash; drivers, scheduler, estimator, health
+          monitor, safety supervisor, control loops and sequence &mdash; is the same source in
+          simulation and on target; only what sits beneath them differs. Nothing has been run on
+          physical hardware, so the figures are simulation results at the 1&nbsp;kHz control rate.
+        </p>
+
       </div>
     </article>
 
